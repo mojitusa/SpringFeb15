@@ -1,0 +1,14 @@
+@charset "UTF-8";
+
+.title {
+	text-align: left;	
+}
+.title > a {
+	text-decoration: none;
+}
+.title > a {
+	color: black;
+}
+.title > a:hover {
+	color: green;
+}
