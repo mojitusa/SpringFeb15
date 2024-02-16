@@ -15,4 +15,12 @@
   		FROM board b join member m ON b.mno=m.mno
   		WHERE board_no=#{no} AND board_del='1'
   	</select>
+  	
+  	<insert id="write" parameterType="writeDTO">
+  		INSERT INTO board (board_title, board_content, mno)
+  		VALUES (#{title}, #{content}, (SELECT mno FROM member WHERE mid=#{mid}))
+  		<selectKey resultType="Int" keyProperty="board_no" order="AFTER">
+  			SELECT LAST_INSERT_ID()
+  		</selectKey>
+  	</insert>
   </mapper>

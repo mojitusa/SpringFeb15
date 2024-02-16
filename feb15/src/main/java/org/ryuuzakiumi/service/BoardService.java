@@ -4,7 +4,7 @@ import java.util.List;
 
 import org.ryuuzakiumi.dao.BoardDAO;
 import org.ryuuzakiumi.dto.BoardDTO;
-import org.ryuuzakiumi.util.Util;
+import org.ryuuzakiumi.dto.WriteDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -21,6 +21,11 @@ public class BoardService {
 	public BoardDTO detail(int no) {
 		//문자? util에 숫자로 변경해 주는 메소드 만들기
 		return boardDAO.detail(no);
+	}
+
+	public int write(WriteDTO dto) {
+		dto.setMid("testID 1");
+		return boardDAO.write(dto);
 	}
 
 }

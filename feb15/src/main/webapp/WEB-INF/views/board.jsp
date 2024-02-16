@@ -35,7 +35,25 @@
         <link href="https://fonts.googleapis.com/css?family=Roboto+Slab:400,100,300,700" rel="stylesheet" type="text/css" />
         <!-- Core theme CSS (includes Bootstrap)-->
         <link href="css/styles.css" rel="stylesheet" />
-        <link href="css/board.css?ver=0.01" rel="stylesheet" />
+        <link href="css/board.css" rel="stylesheet" />
+        <script type="text/javascript">
+        	function writeCheck(){
+        		//alert("글쓰기 버튼을 눌렀습니다.");
+        		let title = document.querySelector("#title");
+        		let content = document.querySelector("#content");
+        		//alert("title : " + title.value + "/ content : " + content.value);
+        		if(title.value.length < 4) {
+        			alert("제목을 다섯 글자 이상으로 입력해 주세요.");
+        			title.focus();	
+        			return false;
+        		}
+        		if(content.value.length < 10){
+        			alert("본문 내용을 열 글자 이상으로 입력해 주세요.");
+        			content.focus();	
+        		}
+        		return false;
+        	}
+        </script>
     </head>
     <body id="page-top">
         <!-- Navigation-->
@@ -93,9 +111,9 @@
         			</div>
         			<div class="modal-body">
         				<div class="mt-2">
-	        				<form action="./write" method="post">
-	        					<input type="text" name="title" class="form-control bm-2">
-	        					<textarea name="content" class="form-control mb-2 vh-500" ></textarea>
+	        				<form action="./write" method="post" onsubmit="return writeCheck()" name="frm">
+	        					<input type="text" id="title" name="title" class="form-control bm-2" required="required" placeholder="제목을 입력하세요">
+	        					<textarea id="content" name="content" class="form-control mb-2 vh-500" required="required"></textarea>
 	        					<button type="submit" class="btn btn-info">글쓰기</button>
 	        				</form>
         				</div>

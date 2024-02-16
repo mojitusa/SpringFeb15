@@ -1,14 +1,18 @@
 @charset "UTF-8";
 
 .title {
-	text-align: left;	
+	text-align: left;
 }
-.title > a {
+.title > a{
 	text-decoration: none;
-}
-.title > a {
 	color: black;
 }
 .title > a:hover {
-	color: green;
+	color: yellow;
+}
+.badge{
+   background-color: green;
+}
+.vh-500{
+	height: 500px;
 }

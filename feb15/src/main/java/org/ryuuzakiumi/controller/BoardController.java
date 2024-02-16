@@ -60,11 +60,16 @@ public class BoardController {
 	//글쓰기 2024-02-16
 	@PostMapping("/write")	//내용 + 제목 -> DB에 저장 -> 보드로
 	public String write(WriteDTO dto) {
-		System.out.println(dto.getTitle());
-		System.out.println(dto.getContent());
 		
-		//return "redirect:/board";
-		return "";
+		int result = boardService.write(dto);
+		// 0(문제 발생) 1(정상)
+		//추후 세션 관련 작업을 더 해야 합니다.
+		
+		if (result == 1) {
+			return "redirect:/detail?no="+dto.getBoard_no();
+		} else {
+			return "return:/error";
+		}
 	}
 }
 
