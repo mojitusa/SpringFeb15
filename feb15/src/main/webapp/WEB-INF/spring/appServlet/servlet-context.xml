@@ -31,7 +31,7 @@
 		<beans:property name="suffix" value=".jsp" />
 	</beans:bean>
 	
-	<context:component-scan base-package="org.ryuuzkaiumi.*" />
+	<context:component-scan base-package="org.ryuuzakiumi.*" />
 	
 	<beans:import resource="classpath:/spring/db-context.xml"/>	
 	

@@ -35,7 +35,7 @@
         <link href="https://fonts.googleapis.com/css?family=Roboto+Slab:400,100,300,700" rel="stylesheet" type="text/css" />
         <!-- Core theme CSS (includes Bootstrap)-->
         <link href="css/styles.css" rel="stylesheet" />
-        <link href="css/board.css" rel="stylesheet" />
+        <link href="css/board.css?ver=0.01" rel="stylesheet" />
     </head>
     <body id="page-top">
         <!-- Navigation-->
@@ -76,10 +76,33 @@
 			</tr>
 			</c:forEach>
 		</tbody>
-	</table>
+		</table>
+		<!-- 페이징 -->
+		<button type="button" class="btn btn-info" data-bs-toggle="modal" data-bs-target="#write">글쓰기</button>
                 </div>
             </div>
-        </section>        
+        </section>
+        
+        <!-- 글쓰기 모달 만들기 -->
+        <div class="modal" id="write">
+        	<div class="modal-dialog modal-xl">
+        		<div class="modal-content">
+        			<div class="modal-header">
+        				<h5 class="modal-title">글쓰기 창입니다.</h5>
+        				<button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        			</div>
+        			<div class="modal-body">
+        				<div class="mt-2">
+	        				<form action="./write" method="post">
+	        					<input type="text" name="title" class="form-control bm-2">
+	        					<textarea name="content" class="form-control mb-2 vh-500" ></textarea>
+	        					<button type="submit" class="btn btn-info">글쓰기</button>
+	        				</form>
+        				</div>
+        			</div>
+        		</div>
+        	</div>
+        </div>        
         <!-- Bootstrap core JS-->
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
         <!-- Core theme JS-->
