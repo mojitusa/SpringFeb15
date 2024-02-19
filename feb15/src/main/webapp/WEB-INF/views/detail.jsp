@@ -72,6 +72,21 @@
 			</div>
 			<button class="btn btn-warning" onclick="history.back()">게시판으로</button>
 			<button class="btn btn-warning" onclick="history.go(-1)">게시판으로</button>
+			<hr>
+			<div>
+				<form action="./commentWrite" method="post">
+					<div class="row">
+						<div class="col-xs-8 col-sm-10 col-md-11 col-xl-11" style="height: 100px; width: 100%;">
+							<textarea class="form-control" name="comment" style="height: 100px; width: 100%;"></textarea>
+						</div>
+						<br>
+						<div class="col-xs-4 col-sm-2 col-md-1 con-xl-1" style="width: 100%; margin-top: 20px; text-align: right;">
+							<button class="btn btn-primary" style="width: auto">댓글쓰기</button>
+						</div>
+					</div>
+					<input type="hidden" name="no" value="${detail.board_no }">
+				</form>
+			</div>
 		</div>
 	</section>
 	<!-- <input type="button" value="게시판으로"> 이렇게도 버튼을 만들 수 있다 -->

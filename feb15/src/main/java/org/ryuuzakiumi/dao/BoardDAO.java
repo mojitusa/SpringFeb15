@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.apache.ibatis.session.SqlSession;
 import org.ryuuzakiumi.dto.BoardDTO;
+import org.ryuuzakiumi.dto.CommentDTO;
 import org.ryuuzakiumi.dto.WriteDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -24,6 +25,10 @@ public class BoardDAO {
 
 	public int write(WriteDTO dto) {
 		return sqlSession.insert("board.write", dto);
+	}
+	
+	public int commentWrite(CommentDTO comment) {
+		return sqlSession.insert("board.commentWrite", comment);
 	}
 
 }

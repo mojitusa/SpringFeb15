@@ -8,6 +8,7 @@
   	<typeAliases>
   		<typeAlias type="org.ryuuzakiumi.dto.BoardDTO" alias="boardDTO"/>
   		<typeAlias type="org.ryuuzakiumi.dto.WriteDTO" alias="writeDTO"/>
+  		<typeAlias type="org.ryuuzakiumi.dto.CommentDTO" alias="commentDTO"/>
   		
   	</typeAliases>
   

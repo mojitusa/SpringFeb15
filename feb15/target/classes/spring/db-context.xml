@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+	<bean id="dataSourceSpied" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
+		<property name="username" value="c23c_08"></property>
+		<property name="password" value="01234567"></property>
+		<property name="url" value="jdbc:mariadb://guro.wisejia.com:3307/c23c_08"></property>
+		<property name="driverClassName" value="org.mariadb.jdbc.Driver"></property>
+	</bean>
+	
+	<bean id="dataSource" class="net.sf.log4jdbc.Log4jdbcProxyDataSource">
+      <constructor-arg ref="dataSourceSpied" />
+      <property name="logFormatter">
+         <bean class="net.sf.log4jdbc.tools.Log4JdbcCustomFormatter">
+         <property name="loggingType" value="MULTI_LINE" />
+         <property name="sqlPrefix" value="SQL : " />
+      </bean>
+      </property>
+   </bean>
+	
+	<bean class="org.mybatis.spring.SqlSessionFactoryBean" id="sqlSessionFactoryBean">
+		<property name="dataSource" ref="dataSource"></property>
+		<property name="mapperLocations" value="classpath:/mybatis/mappers/*-mapper.xml"></property>
+		<property name="configLocation" value="classpath:/mybatis/config/mybatis-config.xml"></property> 
+	</bean>
+	
+	<bean id="sqlSession" class="org.mybatis.spring.SqlSessionTemplate" >
+		<constructor-arg name="sqlSessionFactory" ref="sqlSessionFactoryBean" ></constructor-arg>
+	</bean>
+</beans>

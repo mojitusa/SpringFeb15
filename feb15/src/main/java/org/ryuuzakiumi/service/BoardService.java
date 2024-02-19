@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.ryuuzakiumi.dao.BoardDAO;
 import org.ryuuzakiumi.dto.BoardDTO;
+import org.ryuuzakiumi.dto.CommentDTO;
 import org.ryuuzakiumi.dto.WriteDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -27,5 +28,12 @@ public class BoardService {
 		dto.setMid("testID 1");
 		return boardDAO.write(dto);
 	}
+	
+	public int commentWrite(CommentDTO comment) {
+		comment.setMid("test2");
+		return boardDAO.commentWrite(comment);
+	}
+	
+	
 
 }

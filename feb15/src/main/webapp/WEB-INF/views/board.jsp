@@ -36,7 +36,10 @@
         <!-- Core theme CSS (includes Bootstrap)-->
         <link href="css/styles.css" rel="stylesheet" />
         <link href="css/board.css" rel="stylesheet" />
+        <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
         <script type="text/javascript">
+        
         	function writeCheck(){
         		//alert("글쓰기 버튼을 눌렀습니다.");
         		let title = document.querySelector("#title");
@@ -53,6 +56,38 @@
         		}
         		return false;
         	}
+        	
+        	function detail(no){
+        		//swal("Good job!", "상세보기입니다.", "success");
+        		/* swal({
+        			title: "good job!",
+        			text: "번호는 " + no,
+        			icon: "success",
+        			button: "좋아요"
+        		}); //title, text, icon, button */
+        		
+        		//모달 보이기
+        		let detailModal = new bootstrap.Modal('#detail', {}); //{옵션}
+        		//$("#modalTitle").text(no);
+        		//$("#modalContent").text("변경된 내용입니다.");
+        	    //detailModal.show();
+        	      
+        		$.ajax({
+        			url		 : "/restDetail",
+        			type	 : "post",
+        			dataType : "json",
+        			data	 : {'no' : no},
+        			success	 : function(data){ //text -> json
+        				//alert(data.board_title);
+                		$("#modalTitle").text(data.board_title);
+                		$("#modalContent").text(data.board_content);
+                	    detailModal.show();
+        			},
+        			error 	 : function(error){
+        				alert(error);
+        			}
+        		});	
+        	}
         </script>
     </head>
     <body id="page-top">
@@ -67,36 +102,36 @@
                 </div>
                 <div class="row text-center">
                     <table class="table table-hover">
-		<thead>
-			<tr>
-				<th>번호</th>
-				<th>제목</th>
-				<th>글쓴이</th>
-				<th>날짜</th>
-				<th>읽음</th>
-			</tr>
-		</thead>
-		<tbody>
-			<c:forEach items="${list }" var="row">
-			<tr>
-				<td>${row.board_no }</td>
-				<td class="title">
-					<a href="./detail?no=${row.board_no }">
-						${row.board_title } 
-						<c:if test="${row.comment gt 0}">
-						    [${row.comment }]
-						</c:if>
-					</a>
-				</td>
-				<td>${row.board_write }</td>
-				<td>${row.board_date }</td>
-				<td>${row.board_count }</td>
-			</tr>
-			</c:forEach>
-		</tbody>
-		</table>
-		<!-- 페이징 -->
-		<button type="button" class="btn btn-info" data-bs-toggle="modal" data-bs-target="#write">글쓰기</button>
+						<thead>
+							<tr>
+								<th>번호</th>
+								<th>제목</th>
+								<th>글쓴이</th>
+								<th>날짜</th>
+								<th>읽음</th>
+							</tr>
+						</thead>
+						<tbody>
+							<c:forEach items="${list }" var="row">
+								<tr>
+									<td onclick="detail(${row.board_no })">${row.board_no }</td>
+									<td class="title">
+										<a href="./detail?no=${row.board_no }">
+											${row.board_title } 
+											<c:if test="${row.comment gt 0}">
+											    <sapn class="badge">[${row.comment }]</sapn>
+											</c:if>
+										</a>
+									</td>
+									<td>${row.board_write }</td>
+									<td>${row.board_date }</td>
+									<td>${row.board_count }</td>
+								</tr>
+							</c:forEach>
+						</tbody>
+					</table>
+					<!-- 페이징 -->
+					<button type="button" class="btn btn-info" data-bs-toggle="modal" data-bs-target="#write">글쓰기</button>
                 </div>
             </div>
         </section>
@@ -118,9 +153,33 @@
 	        				</form>
         				</div>
         			</div>
+        			<div class="modal-footer">
+        				모달 푸터
+        				2024-02-19 웹 표준 기술 /RESTAPI / RESTFULL
+        			</div>
         		</div>
         	</div>
-        </div>        
+        </div>   
+        <!-- 톱아보기 모달 -->
+        <div class="modal" id="detail">
+        	<div class="modal-dialog modal-xl">
+        		<div class="modal-content">
+        			<div class="modal-header">
+        				<h5 class="modal-title" id="modalTitle">톱아보기</h5>
+        				<button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        			</div>
+        			<div class="modal-body">
+        				<div class="mt-2" id="modalContent">
+        					제목<br>
+        					본문내용
+        				</div>
+        			</div>
+        			<div class="modal-footer">
+						톱아보기 모달
+        			</div>
+        		</div>
+        	</div>
+        </div>       
         <!-- Bootstrap core JS-->
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
         <!-- Core theme JS-->

@@ -23,4 +23,9 @@
   			SELECT LAST_INSERT_ID()
   		</selectKey>
   	</insert>
+  	
+  	<insert id="commentWrite" parameterType="commentDTO">
+  		INSERT INTO comment (board_no, mno, ccomment) 
+  		VALUES (#{no}, (SELECT mno FROM member WHERE mid=#{mid}), #{comment}) 
+  	</insert>
   </mapper>

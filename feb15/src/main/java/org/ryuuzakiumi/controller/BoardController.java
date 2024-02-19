@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Param;
 import org.ryuuzakiumi.dto.BoardDTO;
+import org.ryuuzakiumi.dto.CommentDTO;
 import org.ryuuzakiumi.dto.WriteDTO;
 import org.ryuuzakiumi.service.BoardService;
 import org.ryuuzakiumi.util.Util;
@@ -70,6 +71,14 @@ public class BoardController {
 		} else {
 			return "return:/error";
 		}
+	}
+	
+	//댓글 쓰기 2024-02-19 psd == 글번호 no, 댓글내용 comment, 글쓴이
+	@PostMapping("/commentWrite")
+	public String commentWrite(CommentDTO comment) {
+		int result = boardService.commentWrite(comment);
+		System.out.println("댓글쓰기 결과" + result);
+		return "redirect:/detail";
 	}
 }
 
