@@ -41,6 +41,24 @@
 <!-- Core theme CSS (includes Bootstrap)-->
 <link href="css/styles.css" rel="stylesheet" />
 <link href="css/board.css" rel="stylesheet" />
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script type="text/javascript">
+function deletePost(){
+   Swal.fire({
+        title: "글을 삭제합니다",
+        //text: "post를 삭제합니다.",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonText: "Yes",
+        cancelButtonText: "No",
+      }).then(result => {
+        if (result.isConfirmed) {
+          Swal.fire("삭제했습니다.","", "success");
+        }
+      });
+   
+}
+</script>
 </head>
 <body id="page-top">
 	<!-- Navigation-->
@@ -60,6 +78,8 @@
 					<div class="row p-2 bg-secondary">
 						<div class="col align-middle text-start">
 							${detail.board_write }
+							<img alt="edit" src="./img/edit.png">
+							<img alt="delete" src="./img/delete.png" title="글삭제" onclick="deletePost(${detail.board_no})">
 						</div>
 						<div class="col align-middle text-end">
 							${detail.board_date}
@@ -86,6 +106,20 @@
 					</div>
 					<input type="hidden" name="no" value="${detail.board_no }">
 				</form>
+			</div>
+			<!-- 댓글 출력창 -->
+			<div class="mt-2">
+				<c:forEach items="${commentsList }" var="c">
+					<div class="my-4">
+						<div class="bg-warning text-dark row my-2 p-2">
+							<div class="col-7">${c.mname }</div>
+							<div class="col-2">${c.cip }</div>
+							<div class="col-2">${c.cdate }</div>
+							<div class="col-1">${c.clike }</div>
+						</div>
+						<div class="mx-5 mt-1" style="min-height: 80px">${c.comment }</div>
+					</div>
+				</c:forEach>
 			</div>
 		</div>
 	</section>

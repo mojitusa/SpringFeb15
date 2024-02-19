@@ -31,4 +31,8 @@ public class BoardDAO {
 		return sqlSession.insert("board.commentWrite", comment);
 	}
 
+	public List<CommentDTO> commentsList(int reNo) {
+		return sqlSession.selectList("board.commentsList", reNo);
+	}
+
 }

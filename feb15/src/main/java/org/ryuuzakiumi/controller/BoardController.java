@@ -2,7 +2,6 @@ package org.ryuuzakiumi.controller;
 
 import java.util.List;
 
-import org.apache.ibatis.annotations.Param;
 import org.ryuuzakiumi.dto.BoardDTO;
 import org.ryuuzakiumi.dto.CommentDTO;
 import org.ryuuzakiumi.dto.WriteDTO;
@@ -13,6 +12,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 public class BoardController {
@@ -39,7 +39,7 @@ public class BoardController {
 
 	// 2024-02-15 ~ 2024-02-16
 	@GetMapping("/detail")
-	public String detail(@Param("no") String no, Model model) {		
+	public String detail(@RequestParam(value = "no", defaultValue = "0", required = true) String no, Model model) {		
 		//오는 매개변수 no 잡기
 		//String no = request.getParameter("no");
 		//System.out.println(util.str2Int(no)); //숫자면 숫자 문자면 0
@@ -49,6 +49,17 @@ public class BoardController {
 			//						무조건 S D 통과
 			BoardDTO detail = boardService.detail(reNo);
 			model.addAttribute("detail", detail);
+			
+			//2024-02-19 psd 댓글도 뽑기
+			//System.out.println("댓글 수 : " + detail.getComment());
+			if (detail.getComment() > 0) {
+				List<CommentDTO> commentsList = boardService.commentsList(reNo);
+				model.addAttribute("commentsList", commentsList);
+				//페이지로 보내 주기
+				
+				System.out.println(commentsList.get(0).getMname());
+			}
+			
 			return "detail";
 			
 		} else { // 0이라면 
@@ -78,7 +89,7 @@ public class BoardController {
 	public String commentWrite(CommentDTO comment) {
 		int result = boardService.commentWrite(comment);
 		System.out.println("댓글쓰기 결과" + result);
-		return "redirect:/detail";
+		return "redirect:/detail?no="+comment.getNo();
 	}
 }
 

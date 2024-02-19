@@ -33,6 +33,10 @@ public class BoardService {
 		comment.setMid("test2");
 		return boardDAO.commentWrite(comment);
 	}
+
+	public List<CommentDTO> commentsList(int reNo) {
+		return boardDAO.commentsList(reNo);
+	}
 	
 	
 
