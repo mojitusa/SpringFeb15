@@ -11,12 +11,15 @@ public class Util {
 		
 		int result = 0;
 		String res;
-		res = extractNumber(inputstr);
 		
-		if (!(res == null || res.equals(""))) {
+		
+		if (!(inputstr == null)) {
+			res = extractNumber(inputstr);
 			
-			result = Integer.parseInt(res);
-		} 
+			if (!(res.equals(""))) {
+				result = Integer.parseInt(res);
+			}
+		}
 		
 		return result;
 	}

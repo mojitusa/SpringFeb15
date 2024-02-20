@@ -2,6 +2,9 @@ package org.ryuuzakiumi.controller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 import org.ryuuzakiumi.dto.BoardDTO;
 import org.ryuuzakiumi.dto.CommentDTO;
 import org.ryuuzakiumi.dto.WriteDTO;
@@ -13,6 +16,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+
+import egovframework.rte.ptl.mvc.tags.ui.pagination.PaginationInfo;
 
 @Controller
 public class BoardController {
@@ -28,10 +33,33 @@ public class BoardController {
 		return "index";
 	}
 
+	//페이징 추가하기 2024-02-20 psd
 	@GetMapping({"/board", "/"})
-	public String board(Model model) {
-		List<BoardDTO> list = boardService.boardList();
+	public String board(
+		@RequestParam(value = "pageNo", defaultValue = "1", required = false) String no, Model model) {
+		
+		//no는 null
+		
+		//pageNo가 오지 않는다면
+		int currentPageNo = 1;
+		if (util.str2Int(no) == 0) {  //여기 나중에 수정
+			currentPageNo = Integer.parseInt(no);
+		}
+		
+		int totalRecordCount = boardService.totalRecordCount();
+		
+		//pagination
+		PaginationInfo paginationInfo = new PaginationInfo();
+		paginationInfo.setCurrentPageNo(currentPageNo); //현재 페이지 번호
+		paginationInfo.setRecordCountPerPage(10); //한 페이지에 게시되는 게시물
+		paginationInfo.setPageSize(10); //페이징 리스트의 사이즈
+		paginationInfo.setTotalRecordCount(totalRecordCount);//전체 게시물 개수
+		
+		List<BoardDTO> list = boardService.boardList(paginationInfo.getFirstRecordIndex());
 		model.addAttribute("list", list);
+		
+		//페이징 관련 정보가 있는 PaginationInfo 객체를 모델에 반드시 넣어 준다.
+		model.addAttribute("paginationInfo", paginationInfo);
 		
 		return "board";
 		
@@ -71,9 +99,9 @@ public class BoardController {
 	
 	//글쓰기 2024-02-16
 	@PostMapping("/write")	//내용 + 제목 -> DB에 저장 -> 보드로
-	public String write(WriteDTO dto) {
+	public String write(WriteDTO dto, HttpServletRequest request) {
 		
-		int result = boardService.write(dto);
+		int result = boardService.write(dto, request);
 		// 0(문제 발생) 1(정상)
 		//추후 세션 관련 작업을 더 해야 합니다.
 		
@@ -86,10 +114,20 @@ public class BoardController {
 	
 	//댓글 쓰기 2024-02-19 psd == 글번호 no, 댓글내용 comment, 글쓴이
 	@PostMapping("/commentWrite")
-	public String commentWrite(CommentDTO comment) {
+	public String commentWrite(CommentDTO comment, HttpServletRequest request) {
+		HttpSession session = request.getSession();
+		comment.setMid((String)session.getAttribute("mid"));
 		int result = boardService.commentWrite(comment);
 		System.out.println("댓글쓰기 결과" + result);
 		return "redirect:/detail?no="+comment.getNo();
+	}
+	
+	@PostMapping("postDel")
+	public String postDel(@RequestParam("no") int no) {
+		//System.out.println("no: " + no);
+		int result = boardService.postDel(no);
+		System.out.println("result : " + result);
+		return "redirect:/board";
 	}
 }
 

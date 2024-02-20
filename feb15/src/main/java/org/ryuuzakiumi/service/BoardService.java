@@ -2,6 +2,9 @@ package org.ryuuzakiumi.service;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 import org.ryuuzakiumi.dao.BoardDAO;
 import org.ryuuzakiumi.dto.BoardDTO;
 import org.ryuuzakiumi.dto.CommentDTO;
@@ -15,8 +18,8 @@ public class BoardService {
 	@Autowired
 	private BoardDAO boardDAO;
 	
-	public List<BoardDTO> boardList(){
-		return boardDAO.boardList();
+	public List<BoardDTO> boardList(int currentPageNo){
+		return boardDAO.boardList(currentPageNo);
 	}
 
 	public BoardDTO detail(int no) {
@@ -24,18 +27,27 @@ public class BoardService {
 		return boardDAO.detail(no);
 	}
 
-	public int write(WriteDTO dto) {
-		dto.setMid("testID 1");
+	public int write(WriteDTO dto, HttpServletRequest request) {
+		HttpSession session = request.getSession();
+		dto.setMid((String) session.getAttribute("mid"));
 		return boardDAO.write(dto);
 	}
 	
 	public int commentWrite(CommentDTO comment) {
-		comment.setMid("test2");
+		//comment.setMid("test2");
 		return boardDAO.commentWrite(comment);
 	}
 
 	public List<CommentDTO> commentsList(int reNo) {
 		return boardDAO.commentsList(reNo);
+	}
+
+	public int postDel(int no) {
+		return boardDAO.postDel(no);
+	}
+
+	public int totalRecordCount() {
+		return boardDAO.totalRecordCount();
 	}
 	
 	

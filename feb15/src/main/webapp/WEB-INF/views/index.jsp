@@ -46,7 +46,7 @@
             </div>
         </header>
         <!-- Navigation-->
-        <c:import url="menu.jsp"/>
+        <%@ include file="menu.jsp"%>
         <!-- Services-->
         <section class="page-section" id="services">
             <div class="container">

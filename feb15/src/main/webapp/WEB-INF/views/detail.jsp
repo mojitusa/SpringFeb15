@@ -42,6 +42,7 @@
 <link href="css/styles.css" rel="stylesheet" />
 <link href="css/board.css" rel="stylesheet" />
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <script type="text/javascript">
 function deletePost(){
    Swal.fire({
@@ -53,16 +54,53 @@ function deletePost(){
         cancelButtonText: "No",
       }).then(result => {
         if (result.isConfirmed) {
-          Swal.fire("삭제했습니다.","", "success");
+    	  //java에게 삭제하라고 명령내리겠습니다.
+    	  //가상 form = post
+    	  let vform = $("<form><form>");
+    	  vform.attr("name", "vform");
+    	  vform.attr("method", "post");
+    	  vform.attr("action", "./postDel");
+    	  vform.append($('<input/>', {type:'hidden', name:'no', value:${detail.board_no } }));
+    	  vform.appendTo('body');
+    	  vform.submit();
+          //Swal.fire("삭제했습니다.","", "success");
         }
       });
-   
+}
+function commentInsert(){
+	let comment = $("comment").val();
+	if(comment.length < 10){
+		Swal.fire("댓글의 길이가 짧습니다.", "댓글은 10글자 이상이어야 합니다.", "warning");
+		return false;
+	}
+}
+//jquery start
+$(function(){
+	//댓글 몇 글자인지 확인하는 코드
+	$("#comment").keyup(function(){
+		let text = $(this).val();
+		if(text.length > 500){
+			swal.fire("댓글의 길이가 깁니다.", "댓글은 500자까지 가능합니다.", "warning");
+			$(this).val(text.substr(0, 500));
+		}
+		$("#comment-input").text("댓글쓰기 " + text.length + "/500");
+	});
+});
+	var textareaValue = document.getElementById('comment').value.trim();
+	
+	if (textareaVAlue === '') {
+		alert('내용을 입력하세요.');
+		return false;  //폼 전송 중단
+	}
+	
+	
+	
 }
 </script>
 </head>
 <body id="page-top">
 	<!-- Navigation-->
-	<c:import url="menu.jsp" />
+	<%@ include file="menu.jsp"%>
 
 	<!-- detail -->
 	<section class="page-section" id="detail">
@@ -93,20 +131,21 @@ function deletePost(){
 			<button class="btn btn-warning" onclick="history.back()">게시판으로</button>
 			<button class="btn btn-warning" onclick="history.go(-1)">게시판으로</button>
 			<hr>
-			<div>
-				<form action="./commentWrite" method="post">
-					<div class="row">
-						<div class="col-xs-8 col-sm-10 col-md-11 col-xl-11" style="height: 100px; width: 100%;">
-							<textarea class="form-control" name="comment" style="height: 100px; width: 100%;"></textarea>
-						</div>
-						<br>
-						<div class="col-xs-4 col-sm-2 col-md-1 con-xl-1" style="width: 100%; margin-top: 20px; text-align: right;">
-							<button class="btn btn-primary" style="width: auto">댓글쓰기</button>
-						</div>
-					</div>
-					<input type="hidden" name="no" value="${detail.board_no }">
-				</form>
-			</div>
+			<!-- 댓글 입력창 - 스크립트로 빈 칸 검사하기 -->
+<div>
+    <form action="./commentWrite" method="post" onsubmit="return commentInsert()">
+        <div class="row">
+            <div class="col-xs-8 col-sm-10 col-md-11 col-xl-11" style="height: 100px; width: 100%;">
+                <textarea class="form-control" id="comment" name="comment" aria-describedby="comment-input" style="height: 100px; width: 100%;"></textarea>
+            </div>
+            <div class="col-xs-4 col-sm-2 col-md-1 col-xl-1" style="width: 100%; margin-top: 20px; text-align: right;">
+                <button class="btn btn-primary" type="submit" id="comment-btn" style="width: auto">댓글쓰기 0/500</button>
+                <div id="comment-input">ds</div>
+            </div>
+        </div>
+        <input type="hidden" name="no" value="${detail.board_no }">
+    </form>
+</div>
 			<!-- 댓글 출력창 -->
 			<div class="mt-2">
 				<c:forEach items="${commentsList }" var="c">

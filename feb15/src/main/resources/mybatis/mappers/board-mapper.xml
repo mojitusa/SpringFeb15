@@ -16,11 +16,14 @@
 		<result column="cip" property="cip"/>
 	</resultMap>
   
-	<select id ="boardList" resultType="boardDTO">
+  	<select id="totalRecordCount" resultType="Integer">
+  		SELECT COUNT(*) FROM board WHERE board_del='1';
+  	</select>
+  	
+	<select id ="boardList" resultType="boardDTO" parameterType="Integer">
   		SELECT board_no, board_title, board_write, board_date, board_count, comment 
   		FROM boardview 
-  		LIMIT 0, 10
-  	</select>
+  		LIMIT #{pageNo}, 10  	</select>
   	
   	<select id="detail" resultType="boardDTO" parameterType="Integer">
   		SELECT b.board_no, b.board_title, b.board_content, m.mid AS board_write, b.board_date, b.board_ip, b.board_del, 
@@ -47,4 +50,11 @@
   		FROM commentview
   		WHERE board_no=#{no}
   	</select>
+  	
+  	<update id="postDel" parameterType="Integer">
+  		<![CDATA[
+  		UPDATE board SET board_del='0' WHERE board_no=#{no}
+  		]]>
+  	</update>
+  	
   </mapper>

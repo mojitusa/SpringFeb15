@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+    pageEncoding="UTF-8"%>    
 <!-- Navigation-->
 <nav class="navbar navbar-expand-lg navbar-dark fixed-top bg-dark" id="mainNav">
     <div class="container">
@@ -12,7 +12,15 @@
             <ul class="navbar-nav text-uppercase ms-auto py-4 py-lg-0">
                 <li class="nav-item"><a class="nav-link" href="./board">게시판</a></li>
                 <li class="nav-item"><a class="nav-link" href="./notice">공지</a></li>
-                <li class="nav-item"><a class="nav-link" href="./login">로그인</a></li>
+                <c:choose>
+                	<c:when test="${sessionScope.mid ne null }">
+                		<li class="nav-item"><a class="nav-link" href="./myInfo">${sessionScope.mname}님</a></li>
+                		<li class="nav-item"><a class="nav-link" href="./logout">로그아웃</a></li>
+                	</c:when>
+                	<c:otherwise>
+		                <li class="nav-item"><a class="nav-link" href="./login">로그인</a></li>
+                	</c:otherwise>
+                </c:choose>
             </ul>
         </div>
     </div>
