@@ -44,7 +44,7 @@
 	        function writeCheck() {
 	            let title = document.querySelector("#title");
 	            let content = document.querySelector("#content");
-	
+	            
 	            console.log("Title Length: " + title.value.length);
 	            console.log("Content Length: " + content.value.length);
 	
@@ -132,7 +132,7 @@
 											</c:if>
 										</a>
 									</td>
-									<td>${row.board_write }</td>
+									<td>${row.mname }</td>
 									<td>${row.board_date }</td>
 									<td>${row.board_count }</td>
 								</tr>
@@ -143,7 +143,10 @@
 					<div class="m-2 bg-secondary">
 						<ui:pagination paginationInfo = "${paginationInfo}" type="image" jsFunction="linkPage"/>					
 					</div>
-					<button type="button" class="btn btn-info" data-bs-toggle="modal" data-bs-target="#write">글쓰기</button>
+					<!-- 글쓰기 버튼 -->
+					<c:if test="${sessionScope.mid ne null}">
+						<button type="button" class="btn btn-info" data-bs-toggle="modal" data-bs-target="#write">글쓰기</button>
+					</c:if>
                 </div>
             </div>
         </section>

@@ -8,6 +8,6 @@ import lombok.Setter;
 public class BoardDTO {
 	
 	private int board_no, board_count, comment;
-	private String board_title, board_content, board_write, board_date;
+	private String board_title, board_content, mname, mid, board_date, board_ip;
 
 }

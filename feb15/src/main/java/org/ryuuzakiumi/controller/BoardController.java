@@ -85,7 +85,6 @@ public class BoardController {
 				model.addAttribute("commentsList", commentsList);
 				//페이지로 보내 주기
 				
-				System.out.println(commentsList.get(0).getMname());
 			}
 			
 			return "detail";
@@ -99,9 +98,10 @@ public class BoardController {
 	
 	//글쓰기 2024-02-16
 	@PostMapping("/write")	//내용 + 제목 -> DB에 저장 -> 보드로
-	public String write(WriteDTO dto, HttpServletRequest request) {
+	public String write(WriteDTO dto) {
+		//로그인 텍스트
 		
-		int result = boardService.write(dto, request);
+		int result = boardService.write(dto);
 		// 0(문제 발생) 1(정상)
 		//추후 세션 관련 작업을 더 해야 합니다.
 		
@@ -114,9 +114,9 @@ public class BoardController {
 	
 	//댓글 쓰기 2024-02-19 psd == 글번호 no, 댓글내용 comment, 글쓴이
 	@PostMapping("/commentWrite")
-	public String commentWrite(CommentDTO comment, HttpServletRequest request) {
-		HttpSession session = request.getSession();
-		comment.setMid((String)session.getAttribute("mid"));
+	public String commentWrite(CommentDTO comment) {
+		//로그인 텍스트
+		
 		int result = boardService.commentWrite(comment);
 		System.out.println("댓글쓰기 결과" + result);
 		return "redirect:/detail?no="+comment.getNo();
@@ -124,10 +124,27 @@ public class BoardController {
 	
 	@PostMapping("postDel")
 	public String postDel(@RequestParam("no") int no) {
-		//System.out.println("no: " + no);
-		int result = boardService.postDel(no);
-		System.out.println("result : " + result);
-		return "redirect:/board";
+		//로그인 여부 체크
+		if (util.getSession().getAttribute("mid") != null) {
+			//System.out.println("no: " + no);
+			int result = boardService.postDel(no);
+			System.out.println("result : " + result);
+			return "redirect:/board";
+			
+		} else {
+			return "redirect;/login";
+		}
+	}
+	
+	//댓글 삭제 2024-02-21 psd - 댓글 번호 (+ mid) + 글번호
+	@GetMapping("/deleteComment")
+	public String deleteComment(@RequestParam("no") int no, @RequestParam("cno") int cno) {
+		System.out.println("no : " + no);
+		System.out.println("cno : " + cno);
+		
+		int result = boardService.deleteComment(no, cno);
+		
+		return "redirect:/detail?no="+no;
 	}
 }
 

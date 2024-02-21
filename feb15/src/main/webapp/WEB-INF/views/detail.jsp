@@ -56,11 +56,11 @@ function deletePost(){
         if (result.isConfirmed) {
     	  //java에게 삭제하라고 명령내리겠습니다.
     	  //가상 form = post
-    	  let vform = $("<form><form>");
+    	  let vform = $("<form></form>");
     	  vform.attr("name", "vform");
     	  vform.attr("method", "post");
     	  vform.attr("action", "./postDel");
-    	  vform.append($('<input/>', {type:'hidden', name:'no', value:${detail.board_no } }));
+    	  vform.append($('<input/>', {type:'hidden', name:'no', value:${detail.board_no} }));
     	  vform.appendTo('body');
     	  vform.submit();
           //Swal.fire("삭제했습니다.","", "success");
@@ -86,15 +86,22 @@ $(function(){
 		$("#comment-input").text("댓글쓰기 " + text.length + "/500");
 	});
 });
-	var textareaValue = document.getElementById('comment').value.trim();
+/* 	var textareaValue = document.getElementById('comment').value.trim();
 	
 	if (textareaVAlue === '') {
 		alert('내용을 입력하세요.');
 		return false;  //폼 전송 중단
+	} */
+	
+	
+	
+
+//댓글 삭제 버튼
+function deleteComment(no){
+	//swal.fire("댓글을 삭제합니다.", no+"번 글을 삭제합니다.", "warning");
+	if (confirm("댓글을 삭제하시겠습니까?")) {
+		location.href="./deleteComment?no=${detail.board_no}&cno="+no;
 	}
-	
-	
-	
 }
 </script>
 </head>
@@ -115,9 +122,11 @@ $(function(){
 					</div>
 					<div class="row p-2 bg-secondary">
 						<div class="col align-middle text-start">
-							${detail.board_write }
-							<img alt="edit" src="./img/edit.png">
-							<img alt="delete" src="./img/delete.png" title="글삭제" onclick="deletePost(${detail.board_no})">
+							${detail.mname }
+							<c:if test="${detail.mid eq sessionScope.mid }">
+								<img alt="edit" src="./img/edit.png">
+								<img alt="delete" src="./img/delete.png" title="글삭제" onclick="deletePost(${detail.board_no })">
+							</c:if>
 						</div>
 						<div class="col align-middle text-end">
 							${detail.board_date}
@@ -139,8 +148,7 @@ $(function(){
                 <textarea class="form-control" id="comment" name="comment" aria-describedby="comment-input" style="height: 100px; width: 100%;"></textarea>
             </div>
             <div class="col-xs-4 col-sm-2 col-md-1 col-xl-1" style="width: 100%; margin-top: 20px; text-align: right;">
-                <button class="btn btn-primary" type="submit" id="comment-btn" style="width: auto">댓글쓰기 0/500</button>
-                <div id="comment-input">ds</div>
+                <button class="btn btn-primary" type="submit" id="comment-input" style="width: auto">댓글쓰기 0/500</button>
             </div>
         </div>
         <input type="hidden" name="no" value="${detail.board_no }">
@@ -151,7 +159,13 @@ $(function(){
 				<c:forEach items="${commentsList }" var="c">
 					<div class="my-4">
 						<div class="bg-warning text-dark row my-2 p-2">
-							<div class="col-7">${c.mname }</div>
+							<div class="col-7">
+								${c.mname }
+								<c:if test="${c.mid eq sessionScope.mid }">
+									<img alt="edit" src="./img/edit.png">
+									<img alt="delete" src="./img/delete.png" title="댓글삭제" onclick="deleteComment(${c.no})">
+								</c:if>								
+							</div>
 							<div class="col-2">${c.cip }</div>
 							<div class="col-2">${c.cdate }</div>
 							<div class="col-1">${c.clike }</div>

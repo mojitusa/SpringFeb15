@@ -7,6 +7,6 @@ import lombok.Setter;
 @Setter
 public class WriteDTO {
 	private int board_no;
-	private String title, content, mid;
+	private String title, content, mid, ip;
 
 }
