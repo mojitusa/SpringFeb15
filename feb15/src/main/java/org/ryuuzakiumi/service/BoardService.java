@@ -23,7 +23,19 @@ public class BoardService {
 	}
 
 	public BoardDTO detail(int no) {
-		//문자? util에 숫자로 변경해 주는 메소드 만들기
+		//2024-02-22 psd 요구사항 확인 
+		//로그인 했어? -> 조회수 올리기
+		if (util.getSession().getAttribute("mid") != null) {
+			//DTO 만들기 - 번호 + 아이다
+			BoardDTO dto = new BoardDTO();
+			dto.setBoard_no(no);
+			dto.setMid((String) util.getSession().getAttribute("mid"));
+			//int result = boardDAO.readFlag(dto);  //이미 읽었나?
+			//if (result == 0) { //안 읽었다면
+				boardDAO.viewCountup(dto);
+			//}
+		}
+		
 		return boardDAO.detail(no);
 	}
 
@@ -65,6 +77,8 @@ public class BoardService {
 
 	public int deleteComment(int no, int cno) {
 		CommentDTO dto = new CommentDTO();
+		
+		dto.setComment(dto.getComment().replaceAll("(\r\n|\r|\n|\n\r)", "<br>"));
 		dto.setNo(cno);
 		dto.setBoard_no(no);
 		dto.setMid((String) util.getSession().getAttribute("mid"));
@@ -73,6 +87,10 @@ public class BoardService {
 		System.out.println(cno);
 		
 		return boardDAO.deleteComment(dto);
+	}
+
+	public int likeUp(CommentDTO dto) {
+		return boardDAO.likeUp(dto);
 	}
 	
 	

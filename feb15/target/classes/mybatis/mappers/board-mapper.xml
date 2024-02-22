@@ -23,7 +23,8 @@
 	<select id ="boardList" resultType="boardDTO" parameterType="Integer">
   		SELECT board_no, board_title, board_write AS mname, board_date, board_count, comment 
   		FROM boardview 
-  		LIMIT #{pageNo}, 10  	</select>
+  		LIMIT #{pageNo}, 10  	
+  	</select>
   	
   	<select id="detail" resultType="boardDTO" parameterType="Integer">
   		SELECT b.board_no, b.board_title, b.board_content, m.mname, m.mid, b.board_date, b.board_ip, b.board_del, 
@@ -31,6 +32,25 @@
   		FROM board b join member m ON b.mno=m.mno
   		WHERE board_no=#{no} AND board_del='1'
   	</select>
+  	
+  	<select id="readFlag" resultType="Integer" parameterType="boardDTO">
+  		SELECT COUNT(*)
+  		FROM visitcount
+  		WHERE board_no=#{board_no} AND mno=(SELECT mno FROM member WHERE mid=#{mid})
+  	</select>
+  	
+  	<insert id="viewCountUp">
+      <selectKey keyProperty="board_count" resultType="Integer" order="BEFORE">
+         SELECT count(*)
+         FROM visitcount
+         WHERE board_no=#{board_no} AND mno=(SELECT mno FROM member WHERE mid=#{mid})
+      </selectKey>
+      <if test="board_count == 0">      
+         INSERT INTO visitcount (board_no, mno) 
+         VALUES (#{board_no}, (SELECT mno FROM member WHERE mid=#{mid}))
+      </if>
+      SELECT COUNT(*) FROM DUAL
+  	</insert>
   	
   	<insert id="write" parameterType="writeDTO">
   		INSERT INTO board (board_title, board_content, mno, board_ip)
@@ -65,6 +85,12 @@
   		AND cno=#{no}
   		AND mno=(SELECT mno FROM member WHERE mid=#{mid})
   		]]>
+  	</update>
+  	
+  	<update id="likeUp" parameterType="commentDTO">
+  		UPDATE comment 
+  		SET clike=clike+1
+  		WHERE board_no=#{board_no} AND cno=#{no}
   	</update>
   	
   </mapper>

@@ -5,12 +5,57 @@
   
 <mapper namespace="login">
 	
-	<select id="login" parameterType="loginDTO" resultType="loginDTO">
+	<select id="loginIDCheck" parameterType="loginDTO" resultType="loginDTO">
 	<![CDATA[
-		SELECT COUNT(*) AS count, mname
+		SELECT mname
 		FROM member
-		WHERE mid=#{id} AND mpw=#{pw} AND mgrade > 4
+		WHERE mid=#{id} 
 	]]>	
 	</select>
+	
+	<select id="validUserCheck" parameterType="loginDTO" resultType="loginDTO">
+	<![CDATA[	
+		SELECT mname
+		FROM member
+		WHERE mid=#{id} AND mgrade > 4
+	]]>	
+	</select>
+	
+	<select id="loginCheck" parameterType="loginDTO" resultType="loginDTO">
+	<![CDATA[	
+		SELECT mname, mLoginAttemptCount
+		FROM member
+		WHERE mid=#{id} AND mgrade > 4 AND mpw=#{pw}
+	]]>	
+	</select>
+	
+	<update id="loginCountUp" parameterType="loginDTO">
+		UPDATE member 
+		SET mLoginAttemptCount=mLoginAttemptCount+1
+		WHERE mid=#{id} 
+	</update>
+	
+	<select id="loginAttemptCount" parameterType="loginDTO" resultType="loginDTO">
+	<![CDATA[	
+		SELECT mname, mLoginAttemptCount
+		FROM member
+		WHERE mid=#{id} AND mgrade > 4 AND mLoginAttemptCount < 5
+	]]>	
+	</select>	
+	
+	<update id="loginCountReset" parameterType="loginDTO">
+		UPDATE member 
+		SET mLoginCount=1
+		WHERE mid=#{id}
+	</update>
+	
+	<select id="getEmail" parameterType="String" resultType="String">
+		SELECT memail FROM member where mid=#{mid}
+	</select>
+	
+	<insert id="setKey" parameterType="memberDTO">
+		INSERT INTO member (mkey)
+		VALUES (#{mkey})
+	</insert>
   	
 </mapper>

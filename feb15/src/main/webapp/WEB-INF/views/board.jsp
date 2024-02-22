@@ -39,24 +39,31 @@
         <link href="css/board.css" rel="stylesheet" />
         <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+		<!-- 서머노트 -->
+		<script src="/js/summernote/summernote-lite.js"></script>
+		<script src="/js/summernote/lang/summernote-ko-KR.js"></script>
+
+		<link rel="stylesheet" href="/css/summernote/summernote-lite.css">
         <script type="text/javascript">
         
 	        function writeCheck() {
 	            let title = document.querySelector("#title");
-	            let content = document.querySelector("#content");
+	            let content = $('#summernote').summernote('code'); // Summernote에서 HTML 콘텐츠 가져오기
 	            
 	            console.log("Title Length: " + title.value.length);
-	            console.log("Content Length: " + content.value.length);
+	            console.log("Content Length: " + content.length);
 	
 	            if (title.value.length < 5) {
 	                alert("제목을 다섯 글자 이상으로 입력해 주세요.");
 	                title.focus();
 	                return false;
 	            }
-	
-	            if (content.value.length < 10) {
+
+	            // HTML 콘텐츠 내의 텍스트 길이를 확인하려면 HTML 태그를 제거한 다음 길이를 계산합니다.
+	            let plainTextContent = content.replace(/<[^>]*>/g, ''); // HTML 태그 제거
+	            if (plainTextContent.length < 10) {
 	                alert("본문 내용을 열 글자 이상으로 입력해 주세요.");
-	                content.focus();
+	                $('#summernote').summernote('focus'); // 다시 Summernote에 포커스 설정
 	                return false;
 	            }
 	
@@ -94,8 +101,9 @@
         		});	
         	}
         	
+        	//전자정부 페이징 이동하는 스크립트
         	function linkPage(pageNo){
-        		location.href = "/easycompany/employeeList.do?pageNo="+pageNo;
+        		location.href = "./board?pageNo="+pageNo;
         	}        	
         </script>
     </head>
@@ -163,7 +171,7 @@
         				<div class="mt-2">
 	        				<form action="./write" method="post" onsubmit="return writeCheck()" name="frm">
 	        					<input type="text" id="title" name="title" class="form-control bm-2" required="required" placeholder="제목을 입력하세요">
-	        					<textarea id="content" name="content" class="form-control mb-2 vh-500" required="required"></textarea>
+	        					<textarea id="summernote" name="content" class="form-control mb-2 vh-500" required="required"></textarea>
 	        					<button type="submit" class="btn btn-info">글쓰기</button>
 	        				</form>
         				</div>
@@ -190,7 +198,7 @@
         				</div>
         			</div>
         			<div class="modal-footer">
-						톱아보기 모달
+						톱아보기 모달 닫기
         			</div>
         		</div>
         	</div>
@@ -200,5 +208,24 @@
         <!-- Core theme JS-->
         <script src="js/scripts.js"></script>
         <script src="https://cdn.startbootstrap.com/sb-forms-latest.js"></script>
+        <script type="text/javascript">
+        	$(function() {
+        		$('#summernote').summernote({
+        			lang: 'ko-KR', // default: 'en-US'
+        			height: 600,
+        			fontNames : ['D2Coding', 'Arial Black', 'Comic Sans MS', 'Courier New'],
+        			toolbar: [
+        			    // [groupName, [list of button]]
+        			    ['style', ['bold', 'italic', 'underline', 'clear']],
+        			    /* ['font', ['strikethrough', 'superscript', 'subscript']], */
+        			    ['fontname', ['fontname','fontsize', 'color']],
+        			    ['para', ['ul', 'ol', 'paragraph']],
+        			    /* ['height', ['height']] */
+        			    ['table', ['table','link', 'picture', 'video']],
+        			    ['view', ['fullscreen', 'codeview', 'help']]
+        			  ]
+        		});
+        	});
+        </script>
     </body>
 </html>

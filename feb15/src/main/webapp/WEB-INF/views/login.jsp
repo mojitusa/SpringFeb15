@@ -35,6 +35,7 @@
         <link href="https://fonts.googleapis.com/css?family=Roboto+Slab:400,100,300,700" rel="stylesheet" type="text/css" />
         <!-- Core theme CSS (includes Bootstrap)-->
         <link href="css/styles.css" rel="stylesheet" />
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     </head>
     <body id="page-top">
         <!-- Navigation-->
@@ -130,5 +131,34 @@
         <!-- * * Activate your form at https://startbootstrap.com/solution/contact-forms * *-->
         <!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *-->
         <script src="https://cdn.startbootstrap.com/sb-forms-latest.js"></script>
+        
+        <!-- 로그인 제한 사용자 처리 -->
+        <c:if test="${param.validity ne null}">
+        	<script type="text/javascript">
+        		Swal.fire("로그인할 수 없는 계정입니다.", "관리자에게 문의하세요.", "warning");
+        	</script>
+        </c:if>       
+        
+        <!-- 파라미터로 오는 error가 있다면 에러 화면에 출력하기 -->
+        <c:if test="${param.error ne null}">
+        	<script type="text/javascript">
+        		Swal.fire("Oppps!", "잘못된 접근입니다.", "warning");
+        	</script>
+        </c:if>
+        <c:if test="${param.login ne null }">
+        	<script type="text/javascript">
+        		로그인 할 수 없습니다.", "올바른 아이디와 비밀번호를 입력하세요.", "error");
+        	</script>
+        </c:if> 
+        <c:if test="${param.mLoginAttemptCount ne null }">
+        	<script type="text/javascript">
+        		let count = ${param.mLoginAttemptCount};
+         		if(count < 5){
+        			Swal.fire("로그인 정보를 확인하세요", count + "번 시도했습니다.", "warning");
+        		} else {
+        			Swal.fire("로그인 불가", "로그인 시도가 4회를 초과하였습니다. 해당 ID는 잠금처리되었습니다. 관리자에게 문의하십시오.", "warning");
+        		}
+        	</script>
+        </c:if>
     </body>
 </html>

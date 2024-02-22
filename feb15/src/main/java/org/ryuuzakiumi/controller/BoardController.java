@@ -2,9 +2,6 @@ package org.ryuuzakiumi.controller;
 
 import java.util.List;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
-
 import org.ryuuzakiumi.dto.BoardDTO;
 import org.ryuuzakiumi.dto.CommentDTO;
 import org.ryuuzakiumi.dto.WriteDTO;
@@ -96,26 +93,36 @@ public class BoardController {
 		}
 	}
 	
+	@GetMapping("/write")
+	public String write() {
+		return "redirect:/login?error=2048";
+	}
+	
 	//글쓰기 2024-02-16
 	@PostMapping("/write")	//내용 + 제목 -> DB에 저장 -> 보드로
 	public String write(WriteDTO dto) {
 		//로그인 텍스트
 		
-		int result = boardService.write(dto);
-		// 0(문제 발생) 1(정상)
-		//추후 세션 관련 작업을 더 해야 합니다.
-		
-		if (result == 1) {
-			return "redirect:/detail?no="+dto.getBoard_no();
-		} else {
-			return "return:/error";
+		if (util.getSession().getAttribute("mid") != null) {
+			//추후 세션 관련 작업을 더 해야 합니다.
+			System.out.println("내용 : " + dto.getContent());
+			int result = boardService.write(dto);
+			if (result == 1) { //0(문제 발생) 1(정상)
+				return "redirect:/detail?no="+dto.getBoard_no();
+			} else {
+				return "return:/error";
+			}
 		}
+		return "redirect:/login?error='로그인 하셔야 합니다.'";
 	}
 	
 	//댓글 쓰기 2024-02-19 psd == 글번호 no, 댓글내용 comment, 글쓴이
 	@PostMapping("/commentWrite")
 	public String commentWrite(CommentDTO comment) {
 		//로그인 텍스트
+		if(util.getSession().getAttribute("mid") != null) {
+			
+		}
 		
 		int result = boardService.commentWrite(comment);
 		System.out.println("댓글쓰기 결과" + result);
@@ -146,5 +153,24 @@ public class BoardController {
 		
 		return "redirect:/detail?no="+no;
 	}
+	
+	//2024-02-22 요구사항 확인 psd
+	
+	
+	@GetMapping("likeUp")
+	public String likeUp(@RequestParam("no") String no, @RequestParam("cno") String cno) { // board_no=no, cno=cno
+		if (util.intCheck(no) && util.intCheck(cno)) {
+			CommentDTO dto = new CommentDTO();
+			dto.setBoard_no(util.str2Int(no));
+			dto.setNo(util.str2Int(cno));
+			boardService.likeUp(dto);
+			
+			return "redirect:/detail?no="+dto.getBoard_no();
+		} else {
+			return "redirect:/error"; 
+		}
+		
+	}
+	 
 }
 

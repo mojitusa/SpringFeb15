@@ -103,6 +103,13 @@ function deleteComment(no){
 		location.href="./deleteComment?no=${detail.board_no}&cno="+no;
 	}
 }
+	
+function like(xyz) {
+	Swal.fire("좋아요를 누릅니다.", "", "success");
+	setTimeout(function(){
+	location.href="likeUp?no=${detail.board_no}&cno="+xyz;
+	}, 3000);
+}	
 </script>
 </head>
 <body id="page-top">
@@ -141,19 +148,21 @@ function deleteComment(no){
 			<button class="btn btn-warning" onclick="history.go(-1)">게시판으로</button>
 			<hr>
 			<!-- 댓글 입력창 - 스크립트로 빈 칸 검사하기 -->
-<div>
-    <form action="./commentWrite" method="post" onsubmit="return commentInsert()">
-        <div class="row">
-            <div class="col-xs-8 col-sm-10 col-md-11 col-xl-11" style="height: 100px; width: 100%;">
-                <textarea class="form-control" id="comment" name="comment" aria-describedby="comment-input" style="height: 100px; width: 100%;"></textarea>
-            </div>
-            <div class="col-xs-4 col-sm-2 col-md-1 col-xl-1" style="width: 100%; margin-top: 20px; text-align: right;">
-                <button class="btn btn-primary" type="submit" id="comment-input" style="width: auto">댓글쓰기 0/500</button>
-            </div>
-        </div>
-        <input type="hidden" name="no" value="${detail.board_no }">
-    </form>
-</div>
+<c:if test="${sessionScope.mid ne null }">			
+	<div>
+	    <form action="./commentWrite" method="post" onsubmit="return commentInsert()">
+	        <div class="row">
+	            <div class="col-xs-8 col-sm-10 col-md-11 col-xl-11" style="height: 100px; width: 100%;">
+	                <textarea class="form-control" id="comment" name="comment" aria-describedby="comment-input" style="height: 100px; width: 100%;"></textarea>
+	            </div>
+	            <div class="col-xs-4 col-sm-2 col-md-1 col-xl-1" style="width: 100%; margin-top: 20px; text-align: right;">
+	                <button class="btn btn-primary" type="submit" id="comment-input" style="width: auto">댓글쓰기 0/500</button>
+	            </div>
+	        </div>
+	        <input type="hidden" name="no" value="${detail.board_no }">
+	    </form>
+	</div>
+</c:if>
 			<!-- 댓글 출력창 -->
 			<div class="mt-2">
 				<c:forEach items="${commentsList }" var="c">
@@ -168,7 +177,10 @@ function deleteComment(no){
 							</div>
 							<div class="col-2">${c.cip }</div>
 							<div class="col-2">${c.cdate }</div>
-							<div class="col-1">${c.clike }</div>
+							<div class="col-1">
+								<img alt="like" src="./img/like.png" onclick="like(${c.no})">
+								${c.clike }
+							</div>
 						</div>
 						<div class="mx-5 mt-1" style="min-height: 80px">${c.comment }</div>
 					</div>

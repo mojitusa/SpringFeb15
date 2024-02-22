@@ -14,7 +14,7 @@
                 <li class="nav-item"><a class="nav-link" href="./notice">공지</a></li>
                 <c:choose>
                 	<c:when test="${sessionScope.mid ne null }">
-                		<li class="nav-item"><a class="nav-link" href="./myInfo">${sessionScope.mname}님</a></li>
+                		<li class="nav-item"><a class="nav-link" href="./myInfo@${sessionScope.mid }">${sessionScope.mname}님</a></li>
                 		<li class="nav-item"><a class="nav-link" href="./logout">로그아웃</a></li>
                 	</c:when>
                 	<c:otherwise>

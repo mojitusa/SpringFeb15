@@ -23,6 +23,14 @@ public class BoardDAO {
 		return sqlSession.selectOne("board.detail", no);
 	}
 
+	public int readFlag(BoardDTO dto) {
+		return sqlSession.selectOne("board.readFlag", dto);
+	}
+	
+	public void viewCountup(BoardDTO dto) {
+		sqlSession.insert("board.viewCountUp", dto);
+	}
+	
 	public int write(WriteDTO dto) {
 		return sqlSession.insert("board.write", dto);
 	}
@@ -46,5 +54,10 @@ public class BoardDAO {
 	public int deleteComment(CommentDTO dto) {
 		return sqlSession.update("board.deleteComment", dto);
 	}
+
+	public int likeUp(CommentDTO dto) {
+		return sqlSession.update("board.likeUp", dto);
+	}
+
 
 }

@@ -10,6 +10,7 @@
   		<typeAlias type="org.ryuuzakiumi.dto.WriteDTO" alias="writeDTO"/>
   		<typeAlias type="org.ryuuzakiumi.dto.CommentDTO" alias="commentDTO"/>
   		<typeAlias type="org.ryuuzakiumi.dto.LoginDTO" alias="loginDTO"/>
+  		<typeAlias type="org.ryuuzakiumi.dto.MemberDTO" alias="memberDTO"/>
   		
   	</typeAliases>
   

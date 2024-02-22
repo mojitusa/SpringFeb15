@@ -7,6 +7,6 @@ import lombok.Setter;
 @Setter
 public class LoginDTO {
 	
-	private int count;
+	private int loginFlag, mLoginAttemptCount;
 	private String id, pw, mname;
 }
