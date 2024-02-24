@@ -32,6 +32,10 @@ public class LoginDAO {
 		sqlSession.update("login.loginCountUp", loginDTO);
 	}
 
+	public LoginDTO loginAttemptCheck(LoginDTO loginDTO) {
+		return sqlSession.selectOne("login.loginAttemptCheck", loginDTO);
+	}
+	
 	public void loginCountReset(LoginDTO loginDTO) {
 		sqlSession.update("login.loginCountReset", loginDTO);
 	}
@@ -43,6 +47,7 @@ public class LoginDAO {
 	public void setKey(MemberDTO dto) {
 		sqlSession.insert("login.setKey", dto);
 	}
+
 
 
 

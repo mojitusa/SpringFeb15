@@ -64,27 +64,6 @@
 		    </div>
 		</section>
 
-		
-<!-- 		<section class="page-section" id="login" >
-		    <div class="container">
-		    	<div class="w-25 center-block text-center">
-		    		<img alt="login" src="./img/login.png" width="250px;">
-			        <div class="mb-3 row">
-			            <label for="staticEmail" class="col-sm-3 col-form-label">I D</label>
-		                <div class="col-sm-8">
-			            	<input type="text" class="form-control" id="id" placeholder="아이디">    	
-		            	</div>
-			        </div>	
-			        <div class="mb-3 row">
-			            <label for="inputPassword" class="col-sm-3 col-form-label">Password</label>
-		                <div class="col-sm-8">
-			            	<input type="password" class="form-control" id="pw" placeholder="비밀번호">    	
-		            	</div>
-			        </div>			         
-			     </div> 
-		    </div>
-		</section> -->
-
         
         <!-- Services-->
         <section class="page-section" id="services">

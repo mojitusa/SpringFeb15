@@ -43,7 +43,7 @@ public class LoginController {
 		LoginDTO login = loginService.loginIDCheck(loginDTO);
 		// 일단 아이디가 존재하는지 확인한다.
 
-		if (login.getMname() != null) { // ID가 존재하면d
+		if (login.getMname() != null) { // ID가 존재하면
 			// 등급 확인과 비밀번호 체크
 
 			// 우선 타당한 사용자인지부터 체크
@@ -59,11 +59,17 @@ public class LoginController {
 					loginService.loginCountUp(loginDTO);
 					return "redirect:/login?mLoginAttemptCount="+loginService.loginAttemptCount(loginDTO).getMLoginAttemptCount();
 				} else {
-					if (loginService.loginCheck(loginDTO) == null) {
-
+					login = loginService.loginAttemptCheck(loginDTO);
+					if (login == null) {
+						//비밀번호가 맞고 횟수가 초과됐다면
+						return "redirect:/login?mLoginAttemptCount="+login.getMLoginAttemptCount();
+					} else {
+						//비밀번호가 맞고 횟수가 초과되지 않았다면
+						//로그인 시도 회수 초기화 하고 메인으로 리다이렉트
+						loginService.loginCountReset(loginDTO);
+						return "redirect:/index";
 					}
 				}
-
 			}
 
 		}

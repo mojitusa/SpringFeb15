@@ -34,6 +34,10 @@ public class LoginService {
 		loginDAO.loginCountUp(loginDTO);
 	}
 
+	public LoginDTO loginAttemptCheck(LoginDTO loginDTO) {
+		return loginDAO.loginAttemptCheck(loginDTO);
+	}
+	
 	public void loginCountReset(LoginDTO loginDTO) {
 		loginDAO.loginCountReset(loginDTO);
 		
@@ -59,6 +63,7 @@ public class LoginService {
 	public void setKey(MemberDTO dto) {
 		loginDAO.setKey(dto);
 	}
+
 
 
 

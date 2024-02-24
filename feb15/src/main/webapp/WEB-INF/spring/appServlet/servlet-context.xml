@@ -20,6 +20,7 @@
    <resources mapping="/css/**" location="/resources/css/" />
    <resources mapping="/js/**" location="/resources/js/" />
    <resources mapping="/img/**" location="/resources/img/" />
+   <resources mapping="/upfile/**" location="/resources/upfile/" />
 	
 	
 	
@@ -33,6 +34,6 @@
 	
 	<context:component-scan base-package="org.ryuuzakiumi.*" />
 	
-	<beans:import resource="classpath:/spring/db-context.xml"/>	
+	<beans:import resource="classpath:/spring/*-context.xml"/>	
 	
 </beans:beans>

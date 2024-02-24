@@ -11,6 +11,7 @@
   		<typeAlias type="org.ryuuzakiumi.dto.CommentDTO" alias="commentDTO"/>
   		<typeAlias type="org.ryuuzakiumi.dto.LoginDTO" alias="loginDTO"/>
   		<typeAlias type="org.ryuuzakiumi.dto.MemberDTO" alias="memberDTO"/>
+  		<typeAlias type="org.ryuuzakiumi.dto.GalleryDTO" alias="galleryDTO"/>
   		
   	</typeAliases>
   

@@ -25,7 +25,15 @@
 	<![CDATA[	
 		SELECT mname, mLoginAttemptCount
 		FROM member
-		WHERE mid=#{id} AND mgrade > 4 AND mpw=#{pw}
+		WHERE mid=#{id} AND mpw=#{pw}
+	]]>	
+	</select>
+	
+	<select id="loginAttemptCount" parameterType="loginDTO" resultType="loginDTO">
+	<![CDATA[	
+		SELECT mname, mLoginAttemptCount
+		FROM member
+		WHERE mid=#{id} AND mgrade > 4
 	]]>	
 	</select>
 	
@@ -35,17 +43,15 @@
 		WHERE mid=#{id} 
 	</update>
 	
-	<select id="loginAttemptCount" parameterType="loginDTO" resultType="loginDTO">
-	<![CDATA[	
+	<select id="loginAttemptCheck" parameterType="loginDTO" resultType="loginDTO">
 		SELECT mname, mLoginAttemptCount
 		FROM member
-		WHERE mid=#{id} AND mgrade > 4 AND mLoginAttemptCount < 5
-	]]>	
-	</select>	
+		WHERE mid=#{id} AND mpw=#{pw}
+	</select>
 	
 	<update id="loginCountReset" parameterType="loginDTO">
 		UPDATE member 
-		SET mLoginCount=1
+		SET mLoginCount=0
 		WHERE mid=#{id}
 	</update>
 	
