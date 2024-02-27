@@ -1,5 +1,8 @@
 package org.ryuuzakiumi.controller;
 
+import java.sql.Timestamp;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 import org.ryuuzakiumi.dto.BoardDTO;
@@ -39,8 +42,9 @@ public class BoardController {
 		
 		//pageNo가 오지 않는다면
 		int currentPageNo = 1;
-		if (util.str2Int(no) == 0) {  //여기 나중에 수정
-			currentPageNo = Integer.parseInt(no);
+		int intNo = util.str2Int(no);
+		if (intNo != 0) {  //여기 나중에 수정
+			currentPageNo = intNo;
 		}
 		
 		int totalRecordCount = boardService.totalRecordCount();
@@ -57,6 +61,16 @@ public class BoardController {
 		
 		//페이징 관련 정보가 있는 PaginationInfo 객체를 모델에 반드시 넣어 준다.
 		model.addAttribute("paginationInfo", paginationInfo);
+		
+		//오늘 날짜 체크
+		for (BoardDTO dto : list) {
+			if (dto.getBoard_date().contains(":")) {
+				dto.setToday(1);
+			} else {
+				dto.setToday(0);
+			}
+			
+		}
 		
 		return "board";
 		

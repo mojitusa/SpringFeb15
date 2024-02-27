@@ -1,7 +1,11 @@
 package org.ryuuzakiumi.dto;
 
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
 public class NoticeDTO {
 	int nno, ndel, nread, nlike;
-	String ntite, ncontnet, ndate;
-
+	String ntitle, ncontent, ndate;
 }
