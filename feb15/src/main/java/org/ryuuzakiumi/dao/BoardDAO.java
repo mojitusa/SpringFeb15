@@ -2,18 +2,13 @@ package org.ryuuzakiumi.dao;
 
 import java.util.List;
 
-import org.apache.ibatis.session.SqlSession;
 import org.ryuuzakiumi.dto.BoardDTO;
 import org.ryuuzakiumi.dto.CommentDTO;
 import org.ryuuzakiumi.dto.WriteDTO;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class BoardDAO {
-	
-	@Autowired
-	private SqlSession sqlSession;
+public class BoardDAO extends AbstractDAO {
 	
 	public List<BoardDTO> boardList(int currentPageNo){
 		return sqlSession.selectList("board.boardList", currentPageNo);

@@ -51,7 +51,7 @@
 	
 	<update id="loginCountReset" parameterType="loginDTO">
 		UPDATE member 
-		SET mLoginCount=0
+		SET mLoginAttemptCount=0
 		WHERE mid=#{id}
 	</update>
 	

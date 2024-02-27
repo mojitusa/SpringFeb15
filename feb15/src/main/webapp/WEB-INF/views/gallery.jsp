@@ -38,6 +38,9 @@
 		<link href="css/styles.css" rel="stylesheet" />
 		<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 		<script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.min.js"></script>
+		
+		<link rel="stylesheet" href="css/thumbnail-gallery.css">
+		
 		<script type="text/javascript">
 		const Toast = Swal.mixin({
 			  toast: true,
@@ -50,46 +53,50 @@
 			    toast.onmouseleave = Swal.resumeTimer;
 			  }
 			});
-		}        
-	       </script>
+		}   
+		
+		function galleryDetail(no){
+			//location.href="./galleyDetail?no="+no;
+			//location.href="./galleyDetail/"+no; 이것을 / 이게 문제라서
+			location.href="./galleyDetail@"+no; // 이렇게 수정
+			
+		}
+	    </script>
+	    <style>
+	    </style>
 	</head>
 	<body id="page-top">
 	    <!-- Navigation-->
 	    <%@ include file="menu.jsp" %>	
 		
 		<!-- gallery -->
-		<section class="page-section" id="gallery">
-			<div class="container">
-				<div class="container">
-					<div class="text-center">
-						<table>
-							<thead>
-								<tr>
-									<th>번호</th>
-									<th>제목</th>
-									<th>이미지</th>
-									<th>날짜</th>
-									<th>좋아요</th>
-								</tr>
-							</thead>
-							<tbody>
-								<c:forEach items="${list }" var="row">
-									<tr>
-										<td>${row.gno}</td> 
-										<td>${row.gtitle}</td>
-										<td>
-											<img alt="" src="./upfile/s_${row.gfile}">
-										</td> 
-										<td>${row.gdate}</td> 
-										<td>${row.glike}</td> 
-									</tr>
-								</c:forEach>	
-							</tbody>
-						</table>
-					</div>
-				</div>
-			</div>
-		</section>
+		<div class="container gallery-container">
+		
+		    <h1>Bootstrap 3 Gallery</h1>
+		
+		    <p class="page-description text-center">Thumbnails With Title And Description</p>
+		    
+		    <div class="tz-gallery">
+		
+		        <div class="row">
+					<c:forEach items="${list }" var="row">
+			            <div class="col-sm-6 col-md-4">
+			                <div class="thumbnail">
+			                    <a class="lightbox" href="./gallery/${row.gno}" >
+			                        <img src="./upfile/${row.gfile }" alt="">
+			                    </a>
+			                    <div class="caption">
+			                        <h3>Thumbnail label</h3>
+			                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+			                    </div>
+			                </div>
+			            </div>
+		            </c:forEach>
+		        </div>
+		
+		    </div>
+		
+		</div>
         <!-- Bootstrap core JS-->
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
         <!-- Core theme JS-->
@@ -98,6 +105,10 @@
         <!-- * *                               SB Forms JS                               * *-->
         <!-- * * Activate your form at https://startbootstrap.com/solution/contact-forms * *-->
         <!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *-->
-        <script src="https://cdn.startbootstrap.com/sb-forms-latest.js"></script>		
+        <script src="https://cdn.startbootstrap.com/sb-forms-latest.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/baguettebox.js/1.8.1/baguetteBox.min.js"></script>
+		<script>
+    		baguetteBox.run('.tz-gallery');
+		</script>		
 	</body>
 </html>

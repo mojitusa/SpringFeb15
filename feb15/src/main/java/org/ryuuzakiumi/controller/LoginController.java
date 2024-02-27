@@ -66,6 +66,9 @@ public class LoginController {
 					} else {
 						//비밀번호가 맞고 횟수가 초과되지 않았다면
 						//로그인 시도 회수 초기화 하고 메인으로 리다이렉트
+						HttpSession session = requset.getSession();
+						session.setAttribute("mid", id);
+						session.setAttribute("mname", login.getMname());						
 						loginService.loginCountReset(loginDTO);
 						return "redirect:/index";
 					}

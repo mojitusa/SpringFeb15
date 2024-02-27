@@ -9,10 +9,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class LoginService {
+public class LoginService extends AbstractService{
 	
 	@Autowired LoginDAO loginDAO;
-	@Autowired Util util;
 
 	public LoginDTO loginIDCheck(LoginDTO loginDTO) {
 		return loginDAO.loginIDCheck(loginDTO);

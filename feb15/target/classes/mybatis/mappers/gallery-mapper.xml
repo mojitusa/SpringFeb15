@@ -12,7 +12,26 @@
   	</insert>
   	
   	<select id="galleryList" resultType="GalleryDTO" >
-  		SELECT * FROM gallery 
+  		SELECT gno, gtitle, gfile, 
+  		if(
+  			date_format(now(), '%Y-%m-%d') = date_format(gdate, '%Y-%m-%d'), 
+  			date_format(gdate, '%h:%i'), 
+  			date_format(gdate, '%Y-%m-%d')
+  			) AS gdate, glike
+  		FROM gallery
+  		WHERE gdel=1
+  		ORDER BY gno DESC 
+  	</select>
+  	
+  	<select id="galleryDetail" parameterType="galleryDTO" resultType="galleryDTO">
+  		SELECT gno, gtitle, gfile,  
+  		if(
+  			date_format(now(), '%Y-%m-%d') = date_format(gdate, '%Y-%m-%d'),  
+  			date_format(gdate, '%h:%i'), 
+  			date_format(gdate, '%Y-%m-%d')
+  			) AS gdate, glike
+  		FROM gallery 
+  		WHERE gno=#{gno}
   	</select>
   	
 </mapper>

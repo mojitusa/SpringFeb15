@@ -49,7 +49,9 @@
          INSERT INTO visitcount (board_no, mno) 
          VALUES (#{board_no}, (SELECT mno FROM member WHERE mid=#{mid}))
       </if>
-      SELECT COUNT(*) FROM DUAL
+      <if test="board_count != 0">
+	  	 SELECT COUNT(*) FROM DUAL
+      </if>
   	</insert>
   	
   	<insert id="write" parameterType="writeDTO">
