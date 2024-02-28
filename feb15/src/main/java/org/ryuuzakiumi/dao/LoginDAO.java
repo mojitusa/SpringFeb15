@@ -45,6 +45,14 @@ public class LoginDAO extends AbstractDAO {
 		sqlSession.insert("login.setKey", dto);
 	}
 
+	public int join(MemberDTO join) {
+		return sqlSession.insert("login.join", join);
+	}
+
+	public int idDuplicationChecck(String enteredId) {
+		return sqlSession.selectOne("login.idDuplicationChecck", enteredId);
+	}
+
 
 
 

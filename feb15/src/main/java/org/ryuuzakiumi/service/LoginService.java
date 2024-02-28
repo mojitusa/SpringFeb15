@@ -63,6 +63,14 @@ public class LoginService extends AbstractService{
 		loginDAO.setKey(dto);
 	}
 
+	public int join(MemberDTO join) {
+		return loginDAO.join(join);
+	}
+
+	public int idDuplicationChecck(String enteredId) {
+		return loginDAO.idDuplicationChecck(enteredId);
+	}
+
 
 
 

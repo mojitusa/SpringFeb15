@@ -2,7 +2,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix="ui" uri="http://egovframework.gov/ctl/ui" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
-<%-- <%@ page import="java.time.LocalDate" %> --%>
+<%@ page import="java.time.LocalDate" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <!DOCTYPE html>
 <html lang="ko">
@@ -143,7 +143,7 @@
 			    } else if (months < 12) {
 			        return months + "개월 전";
 			    } else {
-			        return `${years}년 전`;
+			        return `${'${years}'}년 전`;
 			    }
 			}
 		

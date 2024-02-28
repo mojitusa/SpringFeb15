@@ -18,7 +18,7 @@
 		SELECT mname
 		FROM member
 		WHERE mid=#{id} AND mgrade > 4
-	]]>	
+	]]>	z
 	</select>
 	
 	<select id="loginCheck" parameterType="loginDTO" resultType="loginDTO">
@@ -63,5 +63,17 @@
 		INSERT INTO member (mkey)
 		VALUES (#{mkey})
 	</insert>
+	
+	<insert id="join" parameterType="memberDTO">
+		INSERT INTO member (mid, mpw, mname, mgrade, memail)
+		VALUES (#{mid}, 
+		(SELECT HEX(AES_ENCRYPT('#{mpw}','SamDasoo')) FROM DUAL), 
+		#{mname}, 5, #{memail})
+	</insert>
+	
+	<select id="idDuplicationChecck" parameterType="String" resultType="Integer">
+		SELECT COUNT(*) FROM member
+		WHERE mid=#{enteredId};
+	</select>
   	
 </mapper>

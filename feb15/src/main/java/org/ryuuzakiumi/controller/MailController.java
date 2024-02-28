@@ -1,5 +1,7 @@
 package org.ryuuzakiumi.controller;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.apache.commons.mail.EmailException;
 import org.ryuuzakiumi.service.MailService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,4 +35,5 @@ public class MailController {
 		
 		return "redirect:/mail";
 	}
+	
 }
