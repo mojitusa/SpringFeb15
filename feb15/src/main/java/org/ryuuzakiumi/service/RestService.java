@@ -38,4 +38,8 @@ public class RestService extends AbstractService{
 		}
 	}
 
+	public int idCheck(String id) {
+		return restDAO.idCheck(id);
+	}
+
 }

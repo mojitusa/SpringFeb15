@@ -13,6 +13,7 @@
   		<typeAlias type="org.ryuuzakiumi.dto.MemberDTO" alias="memberDTO"/>
   		<typeAlias type="org.ryuuzakiumi.dto.GalleryDTO" alias="galleryDTO"/>
   		<typeAlias type="org.ryuuzakiumi.dto.NoticeDTO" alias="noticeDTO"/>
+  		<typeAlias type="org.ryuuzakiumi.dto.SearchDTO" alias="searchDTO"/>
   		
   	</typeAliases>
   

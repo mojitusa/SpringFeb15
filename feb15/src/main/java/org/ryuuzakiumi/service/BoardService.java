@@ -5,6 +5,7 @@ import java.util.List;
 import org.ryuuzakiumi.dao.BoardDAO;
 import org.ryuuzakiumi.dto.BoardDTO;
 import org.ryuuzakiumi.dto.CommentDTO;
+import org.ryuuzakiumi.dto.SearchDTO;
 import org.ryuuzakiumi.dto.WriteDTO;
 import org.ryuuzakiumi.util.Util;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,8 +18,8 @@ public class BoardService extends AbstractService{
 	private BoardDAO boardDAO;
 	
 	
-	public List<BoardDTO> boardList(int currentPageNo){
-		return boardDAO.boardList(currentPageNo);
+	public List<BoardDTO> boardList(SearchDTO searchDTO){
+		return boardDAO.boardList(searchDTO);
 	}
 
 	public BoardDTO detail(int no) {
@@ -70,8 +71,8 @@ public class BoardService extends AbstractService{
 		return boardDAO.postDel(dto);
 	}
 
-	public int totalRecordCount() {
-		return boardDAO.totalRecordCount();
+	public int totalRecordCount(String search) {
+		return boardDAO.totalRecordCount(search);
 	}
 
 	public int deleteComment(int no, int cno) {

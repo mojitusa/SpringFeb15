@@ -89,7 +89,7 @@
                 
                 // 서버로 보낼 데이터 설정
                 var data = 'enteredId=' + encodeURIComponent(enteredId);
-                xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+                xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8');
                 
                 // 요청 완료 시 실행되는 콜백 함수
 		        xhr.onload = function () {
@@ -99,9 +99,9 @@
 		        	alert('ㅠㅠ');
 		        	
 		            if (response === '사용할 수 있는 아이디입니다.') {
-		                alert('사용할 수 있는 아이디입니다.');
+		                alert('사용할 수 있는.. 아이디입니다.');
 		            } else if (response === '이미 사용 중인 아이디입니다.') {
-		                alert('이미 사용 중인 아이디입니다.');
+		                alert('이미 사용 중인. 아이디입니다.');
 		            }							            
 		        };
 

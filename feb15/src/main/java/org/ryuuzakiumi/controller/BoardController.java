@@ -7,6 +7,7 @@ import java.util.List;
 
 import org.ryuuzakiumi.dto.BoardDTO;
 import org.ryuuzakiumi.dto.CommentDTO;
+import org.ryuuzakiumi.dto.SearchDTO;
 import org.ryuuzakiumi.dto.WriteDTO;
 import org.ryuuzakiumi.service.BoardService;
 import org.ryuuzakiumi.util.Util;
@@ -36,9 +37,13 @@ public class BoardController {
 	//페이징 추가하기 2024-02-20 psd
 	@GetMapping({"/board", "/"})
 	public String board(
-		@RequestParam(value = "pageNo", defaultValue = "1", required = false) String no, Model model) {
+		@RequestParam(value = "pageNo", defaultValue = "1", required = false) String no, 
+		@RequestParam(value = "search", required = false) String search, 
+		Model model) {
 		
-		//no는 null
+		//System.out.println("서치 : " + search);
+		//들어 온다.
+		
 		
 		//pageNo가 오지 않는다면
 		int currentPageNo = 1;
@@ -47,7 +52,8 @@ public class BoardController {
 			currentPageNo = intNo;
 		}
 		
-		int totalRecordCount = boardService.totalRecordCount();
+		//전체 글 수 totalRecordCount
+		int totalRecordCount = boardService.totalRecordCount(search);
 		
 		//pagination
 		PaginationInfo paginationInfo = new PaginationInfo();
@@ -56,11 +62,17 @@ public class BoardController {
 		paginationInfo.setPageSize(10); //페이징 리스트의 사이즈
 		paginationInfo.setTotalRecordCount(totalRecordCount);//전체 게시물 개수
 		
-		List<BoardDTO> list = boardService.boardList(paginationInfo.getFirstRecordIndex());
+		SearchDTO searchDTO = new SearchDTO();
+		searchDTO.setPageNo(paginationInfo.getFirstRecordIndex());
+		searchDTO.setSearch(search);
+				
+		List<BoardDTO> list = boardService.boardList(searchDTO);
 		model.addAttribute("list", list);
 		
 		//페이징 관련 정보가 있는 PaginationInfo 객체를 모델에 반드시 넣어 준다.
 		model.addAttribute("paginationInfo", paginationInfo);
+		model.addAttribute("pageNo", currentPageNo);
+		model.addAttribute("search", search);
 		
 		//오늘 날짜 체크
 		for (BoardDTO dto : list) {
@@ -187,4 +199,3 @@ public class BoardController {
 	}
 	 
 }
-

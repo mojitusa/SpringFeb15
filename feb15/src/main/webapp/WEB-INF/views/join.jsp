@@ -52,6 +52,38 @@
         
         $(function(){
         	//Swal.fire('title','content', 'success');
+			//2024-02-29 애플리케이션 테스트 수행  psd
+        	$('#idCheck').click(function (){        		
+        		let id = $('#id').val();
+        		//Swal.fire('ID검사','검사할 아이디 : ' + id, 'success');
+        		//3글자 이상, 10글자 이하 
+        		
+        		//기회가 된다면 공백을 사용하지 못하게 해주세요.
+        		if(id.length > 10 || id.length < 3){
+        			//3글자 이하, 10글자 이상 = 비정상 -> 멈춤
+        			Swal.fire('ID검사','아이디는 3 ~ 10 글자로 만들어주세요.', 'error');
+        		} else {
+        			//3글자 이상, 10글자 이하 = 정상 -> ajax
+        			$.ajax({
+        				url : './idCheck',
+        				type : 'post',
+        				dataType : 'json',
+        				data : {id : id},
+        				success: function(data){
+        						alert(data.count);
+        					if (data.count == 1) {
+        						Swal.fire('ID검사','이미 사용 중인 ID입니다. 다른 아이디를 입력하세요.', 'warning');			
+        					} else {
+        						Swal.fire('ID검사', id + '는 사용할 수 있는 ID입니다.', 'success');
+        					}
+        				},
+        				error : function(error){
+        					Swal.fire('ID검사','문제가 발생했습니다 ' + error, 'error');
+        				}
+        			});
+        		}
+        	});
+        	
         	//join을 클릭하면 이벤트 발생
         	$('#join').click(function(){
         		//Swal.fire('회원가입','회원가입 버튼을 클릭하셨습니다.', 'success');
@@ -61,6 +93,51 @@
         		let pw2 = $('#password2').val();
         		let name = $('#name').val();
         		let email = $('#email').val();
+        		
+        		if(id.length < 3 || id.length > 10){
+        			$('#id').focus();
+        			Swal.fire('회원가입','아이디는 3~10글자 사이여야 합니다.', 'error');
+        			return false;
+        		}
+        		if(pw1 == ''){
+        			$('#pw1').focus();
+        			Swal.fire('회원가입','암호를 입력하세요.', 'error');
+        			return false;
+        		}
+        		if(pw2 == ''){
+        			$('#pw2').focus();
+        			Swal.fire('회원가입','암호를 다시 입력하세요.', 'error');
+        			return false;
+        		}
+        		if(pw1.length < 3 || pw1.length > 10){
+        			$('#pw1').text('');
+        			$('#pw2').text('');
+        			$('#pw1').focus();
+        			Swal.fire('회원가입','아이디는 3~10글자 사이여야 합니다.', 'error');
+        			return false;
+        		} else if(pw1 != pw2){
+        			$('#pw1').text('');
+        			$('#pw2').text('');
+        			$('#pw1').focus();
+        			Swal.fire('회원가입','비밀번호가 일치하지 않습니다.', 'error');
+        			return false;	
+        		}
+        		
+        		if(name.length < 3 || name.length > 10){
+        			Swal.fire('회원가입','닉네임은 3~10글자 사이여야 합니다.', 'error');
+        			$('#name').focus();
+        			return false;
+        		}
+        		
+        		
+        		
+        		const regExp = /\w+([-+.]\w+)*@\w+([-.]\w+)*\.[a-zA-Z]{2,4}$/;
+          		if(!regExp.test(email)){
+          			Swal.fire('회원가입','이메일 형식이 아닙니다.', 'error');
+            		return false;
+          		}
+          		
+          		
         		//Swal.fire('회원가입','아이디 : ' + id + "<br>비밀번호 : " + pw1 + "/" + pw2, 'success');
         		//alert("줄바꿈 \n 줄바꿈");
         		//전송하기
@@ -78,6 +155,7 @@
         		loginForm.submit();
         	});
         });
+       
         </script>
     </head>
     <body id="page-top">
@@ -124,9 +202,6 @@
 				<div class="col-sm-12">
 					<button type="button" id="join" class="btn btn-info">회원가입</button>
 				</div>
-			</div>
-			<div class="mb-3 row">
-				<div class="col-sm-12">
 			</div>
 			</div>
 		</div>

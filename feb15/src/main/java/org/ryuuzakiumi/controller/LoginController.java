@@ -190,6 +190,8 @@ public class LoginController {
 		
 		return "redirect:/login";
 	}
+
+	
 	
 	@GetMapping("/myjoin")
 	public String myjoin() {
@@ -197,19 +199,20 @@ public class LoginController {
 		return "myjoin";
 	}
 	
-	@PostMapping("/myjoin")
-	public @ResponseBody String myjoin(@RequestParam("enteredId") String enteredId, Model model) {
+	@PostMapping(value="/myjoin", produces = "text/plain;charset=UTF-8")
+	@ResponseBody
+	public String myjoin(@RequestParam("enteredId") String enteredId, Model model) {
 		int dup = 0;
 		dup = loginService.idDuplicationChecck(enteredId);
 		
 		if (dup == 0) {
 			model.addAttribute("duplication", "사용할 수 있는 아이디입니다.");
 			System.out.println("사용할 수 있는 아이디입니다.");
-			return "사용할 수 있는 아이디입니다.";
+			return "사용할 수 있는.. 아이디입니다.";
 		} else {
 			model.addAttribute("duplication", "이미 사용 중인 아이디입니다.");
 			System.out.println("이미 사용 중인 아이디입니다.");
-			return "이미 사용 중인 아이디입니다.";
+			return "이미 사용 중인. 아이디입니다.";
 		}
 		
 		

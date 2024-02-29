@@ -4,14 +4,15 @@ import java.util.List;
 
 import org.ryuuzakiumi.dto.BoardDTO;
 import org.ryuuzakiumi.dto.CommentDTO;
+import org.ryuuzakiumi.dto.SearchDTO;
 import org.ryuuzakiumi.dto.WriteDTO;
 import org.springframework.stereotype.Repository;
 
 @Repository
 public class BoardDAO extends AbstractDAO {
 	
-	public List<BoardDTO> boardList(int currentPageNo){
-		return sqlSession.selectList("board.boardList", currentPageNo);
+	public List<BoardDTO> boardList(SearchDTO searchDTO){
+		return sqlSession.selectList("board.boardList", searchDTO);
 	}
 
 	public BoardDTO detail(int no) {
@@ -42,8 +43,8 @@ public class BoardDAO extends AbstractDAO {
 		return sqlSession.update("board.postDel", dto);
 	}
 
-	public int totalRecordCount() {
-		return sqlSession.selectOne("board.totalRecordCount");
+	public int totalRecordCount(String search) {
+		return sqlSession.selectOne("board.totalRecordCount", search);
 	}
 
 	public int deleteComment(CommentDTO dto) {

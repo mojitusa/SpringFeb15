@@ -83,7 +83,7 @@
 
 //전자정부 페이징 이동하는 스크립트
 function linkPage(pageNo){
-	location.href = "./board?pageNo="+pageNo;
+	location.href = "./board?search=${search}&pageNo="+pageNo;
 }	
 </script>
 </head>
@@ -130,6 +130,16 @@ function linkPage(pageNo){
 						</c:forEach>
 					</tbody>
 				</table>
+				<!-- 검색 -->
+				<div class="m-2 bg-secondery">
+					<div>
+						<form action="./board">  <!-- 메소드가 빠져 있으면 get -->
+							<input type="text" name="search">
+							<input type="text" name="pageNo" value="${pageNo }">
+							<button type="submit">검색</button>
+						</form>
+					</div>
+				</div>
 				<!-- 페이징 -->
 				<div class="m-2 text-secondary" >
 					<ui:pagination paginationInfo="${paginationInfo}" type="image" jsFunction="linkPage"/>

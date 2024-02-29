@@ -67,7 +67,7 @@
 	<insert id="join" parameterType="memberDTO">
 		INSERT INTO member (mid, mpw, mname, mgrade, memail)
 		VALUES (#{mid}, 
-		(SELECT HEX(AES_ENCRYPT('#{mpw}','SamDasoo')) FROM DUAL), 
+		(SELECT HEX(AES_ENCRYPT(#{mpw},'SamDasoo')) FROM DUAL), 
 		#{mname}, 5, #{memail})
 	</insert>
 	
