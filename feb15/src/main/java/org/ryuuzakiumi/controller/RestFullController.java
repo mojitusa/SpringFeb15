@@ -94,11 +94,14 @@ public class RestFullController {
 		searchDTO.setPageNo(paginationInfo.getFirstRecordIndex());
 		searchDTO.setSearch(search);
 		
-		List<BoardDTO> list = boardService.boardList(paginationInfo.getFirstRecordIndex());
+		/*
+		 * List<BoardDTO> list =
+		 * boardService.boardList(paginationInfo.getFirstRecordIndex());
+		 */
 		
 		//JSON
 		JSONObject jsonList = new JSONObject();
-		jsonList.put("list", list);
+		/* jsonList.put("list", list); */
 		jsonList.put("paginationInfo", paginationInfo);
 		jsonList.put("pageNo", pageNo);
 		

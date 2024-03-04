@@ -10,7 +10,7 @@ import lombok.Setter;
 @Setter
 public class BoardDTO {
 	
-	private int board_no, board_count, comment, today;
-	private String board_title, board_content, mname, mid, board_date, board_ip;
+	private int board_no, board_count, comment, today, mno;
+	private String board_title, board_content, mname, mid, board_date, board_ip, board_del;
 	private Timestamp bdate;
 }

@@ -68,8 +68,8 @@
                 <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">게시판 관리:</h6>
-                        <a class="collapse-item" href="buttons.html">게시글 관리</a>
-                        <a class="collapse-item" href="cards.html">댓글 관리</a>
+                        <a class="collapse-item" href="./board">게시글 관리</a>
+                        <a class="collapse-item" href="./comment">댓글 관리</a>
                     </div>
                 </div>
             </li>

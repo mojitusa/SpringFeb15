@@ -16,7 +16,7 @@
 		<result column="cip" property="cip"/>
 	</resultMap>
   
-  	<select id="totalRecordCount" resultType="Integer" parameterType="String">
+  	<select id="totalRecordCount" resultType="Integer" parameterType="searchDTO">
   		SELECT COUNT(*) FROM board b JOIN member m ON b.mno=m.mno   
   		WHERE board_del='1'
   		<if test="search != null and search != ''">
